@@ -1,0 +1,41 @@
+{
+  "name": "tkishel-puppetserver_gem_repo",
+  "version": "0.1.0",
+  "author": "Thomas Kishel",
+  "summary": "Synchronize puppetserver gems between masters",
+  "license": "Apache-2.0",
+  "source": "https://github.com/tkishel/puppetserver_gem_repo.git",
+  "project_page": "https://github.com/tkishel/puppetserver_gem_repo",
+  "issues_url": "https://github.com/tkishel/puppetserver_gem_repo/issues",
+  "dependencies": [
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "pdk-version": "1.3.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.3.0-0-g632fa63"
+}
