@@ -1,8 +1,9 @@
 # Publish a gem repository on the master of masters.
+# @api private
 
 class puppetserver_gem_repo::mom (
 
-  $private_api = 'do not directly apply this class',
+  $private_class = 'do not directly apply this class',
 
 ) {
 
@@ -11,10 +12,19 @@ class puppetserver_gem_repo::mom (
   $repository         = $puppetserver_gem_repo::conf::repository
   $repository_archive = $puppetserver_gem_repo::conf::repository_archive
 
-  package { 'puppet_gem builder' :
-    ensure   => present,
-    name     => 'builder',
-    provider => 'puppet_gem',
+  file { "${gem_cache}/.." :
+    ensure   => directory,
+  }
+
+  file { $gem_cache :
+    ensure   => directory,
+  }
+
+  file { $repository :
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { $repository :
