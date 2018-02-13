@@ -8,6 +8,8 @@
 #     install_into_puppet => true,
 #   }
 #
+# @api public
+#
 # @param version The version of the gem to install.
 # @param install_into_puppet Whether to install the gem into puppet in addition to the puppetserver service.
 

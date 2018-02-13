@@ -1,8 +1,11 @@
 # TODO: Replace hard-coded paths with configured settings.
 
+#
+# @api private
+
 class puppetserver_gem_repo::conf (
 
-  $private_api = 'do not directly apply this class',
+  $private_class = 'do not directly apply this class',
 
 ) {
 

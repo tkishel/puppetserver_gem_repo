@@ -1,8 +1,9 @@
 # Create a local gem repository on compile masters from the master of masters.
+# @api public
 
 class puppetserver_gem_repo::cm (
 
-  $private_api = 'do not directly apply this class',
+  $private_class = 'do not directly apply this class',
 
 ) {
 
