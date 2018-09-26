@@ -1,5 +1,10 @@
 # Changelog
 
+## Release 0.1.2
+
+Update for Puppet 6.0
+Update PDK.
+
 ## Release 0.1.1
 
 Add file resources for jruby-gems/cache.
