@@ -16,7 +16,6 @@
 
 define puppetserver_gem_repo::gem (
 
-  String  $name               = $title,
   String  $version            = 'present',
   Boolean $install_into_agent = false,
 
@@ -24,8 +23,8 @@ define puppetserver_gem_repo::gem (
 
   include puppetserver_gem_repo
 
-  assert_type(Pattern[/^[\w\-]+$/], $name) |$expected, $actual| {
-    fail("Module ${module_name} parameter 'name => ${name}' is not a valid gem name")
+  assert_type(Pattern[/^[\w\-]+$/], $title) |$expected, $actual| {
+    fail("Module ${module_name} '${title}' is not a valid gem name")
   }
 
   assert_type(Variant[Pattern[/^present$/],Pattern[/^\d+\.\d+\.\d+$/]], $version) |$expected, $actual| {
@@ -49,15 +48,15 @@ define puppetserver_gem_repo::gem (
     # Use an 'exec' with 'unless' until that is resolved.
     #
     # $ca_certificate = $puppetserver_gem_repo::conf::puppet_ca_certificate
-    # SSL_CERT_FILE=${ca_certificate} /opt/puppetlabs/puppet/bin/gem install --no-ri --no-rdoc --clear-sources --source https://$(puppet config print server):8140/packages/puppetserver_gems/ruby ${name}
+    # SSL_CERT_FILE=${ca_certificate} /opt/puppetlabs/puppet/bin/gem install --no-ri --no-rdoc --clear-sources --source https://$(puppet config print server):8140/packages/puppetserver_gems/ruby ${title}
 
     $version_gi = $version ? {'present' => '', default => "-v ${version}"}
     $version_ls = $version ? {'present' => '*', default => $version}
     $service = $::pe_server_version ? { undef => 'puppetserver', default => 'pe-puppetserver'}
 
-    exec { "puppetserver install gem ${name}" :
-      command => "${puppetserver_gem_command} install ${name} ${version_gi} ${gem_install_options_string}",
-      unless  => "ls ${puppetserver_gem_directories}/${name}-${version_ls} 1>/dev/null 2>&1",
+    exec { "puppetserver install gem ${title}" :
+      command => "${puppetserver_gem_command} install ${title} ${version_gi} ${gem_install_options_string}",
+      unless  => "ls ${puppetserver_gem_directories}/${title}-${version_ls} 1>/dev/null 2>&1",
       path    => '/usr/bin:/usr/sbin:/bin',
       require => File[$repository],
       notify  => Service[$service],
@@ -69,9 +68,9 @@ define puppetserver_gem_repo::gem (
 
   if $install_into_agent {
 
-    package { "puppet_gem ${name}" :
+    package { "puppet_gem ${title}" :
       ensure          => $version,
-      name            => $name,
+      name            => $title,
       provider        => 'puppet_gem',
       install_options => $gem_install_options_array,
       require         => File[$repository],

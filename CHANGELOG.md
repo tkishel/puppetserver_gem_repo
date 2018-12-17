@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 2.0.2
+
+Correct gem to name param change.
+
 ## Release 2.0.0
 
 Refactor to simplify classes.
