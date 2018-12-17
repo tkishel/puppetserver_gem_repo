@@ -27,7 +27,7 @@ Install a puppetserver gem on the primary master, manually or via a manifest.
 
 Specify the same gem as a `puppetserver_gem_repo::gem` resource on the other masters. For example:
 
-```
+```puppet
 node 'compile-master-*.example.com' {
   puppetserver_gem_repo::gem {
     name               => 'puppet-resource_api',
@@ -39,13 +39,13 @@ node 'compile-master-*.example.com' {
 
 To specify multiple gems, specify the `puppetserver_gem_repo::gems` class on the other masters, and specify the gems via Hiera. For example:
 
-```
+```puppet
 node 'compile-master-*.example.com' {
   include puppetserver_gem_repo::gems
 }
 ```
 
-```
+```yaml
 ---
  puppetserver_gem_repo::gems:
    hiera-eyaml:
@@ -85,6 +85,6 @@ This is particularly valuable with 'hiera-eyaml' gem, allowing the `puppet looku
 
 This module installs the 'builder' gem into puppet on the primary master. If your primary master does not have internet access, manually install the gem on the primary master before using this module. For example:
 
-```
+```shell
 /opt/puppetlabs/puppet/bin/gem install builder --local builder-*.gem
 ```
