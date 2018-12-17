@@ -1,6 +1,6 @@
 {
   "name": "tkishel-puppetserver_gem_repo",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "author": "Thomas Kishel",
   "summary": "Synchronize puppetserver gems between masters",
   "license": "Apache-2.0",
@@ -26,7 +26,8 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04"
+        "16.04",
+        "18.04"
       ]
     }
   ],

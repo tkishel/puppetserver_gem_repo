@@ -1,7 +1,8 @@
-# Create a local gem repository on compile masters from the master of masters.
+# Create a local gem repository from an archive from the master of masters.
+#
 # @api public
 
-class puppetserver_gem_repo::cm (
+class puppetserver_gem_repo::master (
 
   $private_class = 'do not directly apply this class',
 
@@ -11,8 +12,10 @@ class puppetserver_gem_repo::cm (
   $curl_command       = $puppetserver_gem_repo::conf::puppet_curl_command
   $repository         = $puppetserver_gem_repo::conf::repository
   $repository_archive = $puppetserver_gem_repo::conf::repository_archive
-  $curl_url           = "https://${servername}:8140/packages/puppetserver_gems/${puppetserver_gem_repo::conf::archive}"
+  $curl_url           = "https://${puppetserver_gem_repo::conf::server}:8140/packages/puppetserver_gems/${puppetserver_gem_repo::conf::archive}"
   $curl_options       = "--cacert ${ca_certificate} -f -s -R -z ${repository_archive} -w '%{http_code}'"
+
+  # Create the repository directory structure.
 
   file { $repository :
     ensure => directory,
@@ -20,6 +23,9 @@ class puppetserver_gem_repo::cm (
     group  => 'root',
     mode   => '0755',
   }
+
+  # Download the repository archive from the master of masters..
+  # This avoids self-signed certificate issues with file resources or the gem install command.
 
   exec { 'puppetserver_gem_repo download' :
     command => "cp -f -p ${repository_archive}.download ${repository_archive}",
@@ -29,11 +35,13 @@ class puppetserver_gem_repo::cm (
     require => File[$repository],
   }
 
+  # Extract the repository archive.
+
   exec { 'puppetserver_gem_repo extract' :
-    command => "tar --directory=${repository} -xzf ${repository_archive}",
-    path    => '/usr/bin:/usr/sbin:/bin',
-    creates => "${repository}/ruby/gems",
-    require => File[$repository],
+    command     => "tar --directory=${repository} -xzf ${repository_archive}",
+    path        => '/usr/bin:/usr/sbin:/bin',
+    require     => File[$repository],
+    refreshonly => true,
   }
 
 }
